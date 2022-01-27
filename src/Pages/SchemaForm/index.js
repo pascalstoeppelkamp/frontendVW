@@ -32,7 +32,13 @@ export default class index extends Component {
             axios.post('http://localhost:5001/api/v1/Vereinsmitglied', {
                 ...memberObj
             })
-                .then(res => alert("hat geklappt"))
+                .then(res => {
+                    return res.data.data._id
+                })
+                .then(res => axios.post('http://localhost:5001/api/v1/vereinsmitglied/' + res + '/konto', {
+                    ...memberObj
+                })).then(res => console.log(res))
+                .catch(e => alert("hat nicht geklappt"))
                 .catch(e => {
                     console.log(e);
                     alert("hat nicht geklappt")
@@ -42,7 +48,7 @@ export default class index extends Component {
             axios.put('http://localhost:5001/api/v1/Vereinsmitglied/' + memberObj.refID, {
                 ...memberObj
             })
-                .then(res => alert("hat geklappt"))
+                .then(res => console.log(res))
                 .catch(e => {
                     console.log(e);
                     alert("hat nicht geklappt")
@@ -111,8 +117,8 @@ export default class index extends Component {
         const postSchemaAccount = {
             type: "object",
             properties: {
-                Name: {
-                    title: "Name",
+                KontoName: {
+                    title: "KontoName",
                     default: this.state.memberObj.KontoName,
                     type: "string",
                 },
@@ -122,7 +128,7 @@ export default class index extends Component {
                     type: "number",
                 },
             },
-            required: ["Name", "IBAN"]
+            required: ["KontoName", "IBAN"]
         };
 
         return <div style={{ padding: 10 }}>

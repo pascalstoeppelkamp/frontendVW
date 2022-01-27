@@ -90,7 +90,7 @@ export default class index extends Component {
                 Email: res[i].Email,
                 Wohnort: res[i].Wohnort,
                 Tel_NR: res[i].Tel_NR,
-                KontoName: res[i].Konto[0]?.Name,
+                KontoName: res[i].Konto[0]?.KontoName,
                 IBAN: res[i]?.Konto[0]?.IBAN,
             })
         }
