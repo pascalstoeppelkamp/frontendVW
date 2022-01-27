@@ -8,13 +8,13 @@ import EditIcon from '@mui/icons-material/Edit'
 const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
-        field: 'firstName',
+        field: 'Vorname',
         headerName: 'Vorname',
         width: 150,
         editable: false,
     },
     {
-        field: 'lastName',
+        field: 'Nachname',
         headerName: 'Nachname',
         width: 150,
         editable: false,
@@ -26,13 +26,13 @@ const columns = [
         editable: false,
     },
     {
-        field: 'Stadt',
+        field: 'Wohnort',
         headerName: 'Stadt',
         width: 150,
         editable: false,
     },
     {
-        field: 'Tel',
+        field: 'Tel_NR',
         headerName: 'Telefon',
         width: 150,
         editable: false,
@@ -83,12 +83,13 @@ export default class index extends Component {
         let arr = []
         for (let i = 0; i < res.length; i++) {
             arr.push({
+                refID: res[i].id,
                 id: i,
-                firstName: res[i].Vorname,
-                lastName: res[i].Nachname,
+                Vorname: res[i].Vorname,
+                Nachname: res[i].Nachname,
                 Email: res[i].Email,
-                Stadt: res[i].Wohnort,
-                Tel: res[i].Tel_NR,
+                Wohnort: res[i].Wohnort,
+                Tel_NR: res[i].Tel_NR,
                 KontoName: res[i].Konto[0]?.Name,
                 IBAN: res[i]?.Konto[0]?.IBAN,
             })
@@ -105,25 +106,35 @@ export default class index extends Component {
             this.setState({ selectedRow: {}, selected: false });
     }
 
+    _editMember = () => {
+        this.props.editMember(this.state.selectedRow)
+    }
+
+    _deleteMember = () => {
+        axios.post('http://localhost:5001/api/v1/Vereinsmitglied/' + this.state.selectedRow.refID)
+            .then(res => this.getAllMembers())
+            .catch(e => {
+                alert("hat nicht geklappt")
+            });
+    }
     render() {
         return (
             <div style={{ justifyContent: "flex-start", height: '100%', display: "flex", }}>
                 <div style={{ display: 'flex', flexDirection: "column", flex: 1, minHeight: 600, padding: 20 }}>
                     <div style={{ alignSelf: "flex-start", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                        <IconButton disabled={!this.state.selected} aria-label="edit" style={{ margin: 5 }}>
+                        <IconButton disabled={!this.state.selected} aria-label="edit" style={{ margin: 5 }} onClick={() => this._editMember()}>
                             <EditIcon />
                         </IconButton>
-                        <IconButton disabled={!this.state.selected} aria-label="delete" style={{ margin: 5 }}>
+                        <IconButton onClick={() => this._deleteMember()} disabled={!this.state.selected} aria-label="delete" style={{ margin: 5 }}>
                             <DeleteIcon />
                         </IconButton>
                     </div>
                     <DataGrid
                         onSelectionModelChange={(item) => this.selected(item)}
-                        style={{ backgroundColor: "white",width:'100%' }}
+                        style={{ backgroundColor: "white", width: '100%' }}
                         rows={this.state.rows}
                         columns={columns}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
+                        pageSize={15}
                         checkboxSelection
                         disableSelectionOnClick
                     />
