@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import JSONSchemaForm from "react-jsonschema-form";
 import axios from 'axios';
+import { toast } from 'react-toastify';
 export default class index extends Component {
     constructor(props) {
         super(props);
@@ -12,7 +13,10 @@ export default class index extends Component {
                 Wohnort: "",
                 Tel_NR: "",
                 KontoName: "",
-                IBAN: ""
+                IBAN: "",
+                password: "",
+                role: "user",
+                Beruf: "Sonstiges"
             },
             pageType: ""
         }
@@ -33,25 +37,24 @@ export default class index extends Component {
                 ...memberObj
             })
                 .then(res => {
-                    return res.data.data._id
+                    toast.success("Mitglied wurde erfolgreich hinzugefügt.");
+                    this.setState({ memberObj: {} });
+                    return res.data.data._id;
                 })
-                .then(res => axios.post('http://localhost:5001/api/v1/vereinsmitglied/' + res + '/konto', {
-                    ...memberObj
-                })).then(res => console.log(res))
-                .catch(e => alert("hat nicht geklappt"))
                 .catch(e => {
-                    console.log(e);
-                    alert("hat nicht geklappt")
+                    toast.error("Mitglied konnte nicht hinzugefügt werden.")
                 });
         }
         else {
             axios.put('http://localhost:5001/api/v1/Vereinsmitglied/' + memberObj.refID, {
                 ...memberObj
             })
-                .then(res => console.log(res))
+                .then(res => {
+                    toast.success("Mitglied wurde erfolgreich bearbeitet.");
+                    this.setState({ memberObj: {} });
+                })
                 .catch(e => {
-                    console.log(e);
-                    alert("hat nicht geklappt")
+                    toast.error("Mitglied konnte nicht bearbeitet werden.")
                 });
         }
     }
@@ -85,7 +88,7 @@ export default class index extends Component {
                     type: "string",
                     default: this.state.memberObj.Vorname,
                     minLength: 5,
-                    maxLength: 140
+                    maxLength: 140,
                 },
                 Nachname: {
                     title: "Nachname",
@@ -94,10 +97,32 @@ export default class index extends Component {
                     minLength: 5,
                     maxLength: 140
                 },
+                role: {
+                    "enum": [
+                        "user",
+                        "verwalter"
+                    ],
+                    title: "Rolle",
+                    default: this.state.memberObj.role
+                },
+                Beruf: {
+                    "enum": [
+                        "Schüler",
+                        "Student",
+                        "Sonstiges"
+                    ],
+                    default: this.state.memberObj.Beruf,
+                    title: "Beruf"
+                },
                 Email: {
-                    title: "Email",
+                    title: "E-mail",
                     type: "string",
                     default: this.state.memberObj.Email,
+                },
+                password: {
+                    title: "Passwort",
+                    type: "string",
+                    default: this.state.memberObj.password
                 },
                 Wohnort: {
                     title: "Wohnort",
@@ -110,7 +135,7 @@ export default class index extends Component {
                     default: this.state.memberObj.Tel_NR,
                 }
             },
-            required: ["Vorname", "Nachname", "Email", "Wohnort", "Tel_NR"]
+            required: ["Vorname", "Nachname", "Email", "Wohnort", "Tel_NR", "role", "Beruf", "password"]
         };
 
 
@@ -118,7 +143,7 @@ export default class index extends Component {
             type: "object",
             properties: {
                 KontoName: {
-                    title: "KontoName",
+                    title: "Konto Name",
                     default: this.state.memberObj.KontoName,
                     type: "string",
                 },

@@ -4,7 +4,12 @@ import { DataGrid } from '@mui/x-data-grid';
 import { IconButton } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit'
+import EditIcon from '@mui/icons-material/Edit';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
@@ -24,6 +29,18 @@ const columns = [
         headerName: 'E-Mail',
         width: 150,
         editable: false,
+    },
+    {
+        field: 'role',
+        headerName: "Benutzerrolle",
+        width: 150,
+        editable: false
+    },
+    {
+        field: 'Beruf',
+        headerName: "Beruf",
+        width: 150,
+        editable: false
     },
     {
         field: 'Wohnort',
@@ -68,9 +85,13 @@ export default class index extends Component {
 
     getAllMembers = () => {
         axios.get('http://localhost:5001/api/v1/Vereinsmitglied')
-            .then(res => { this.setRows(res) })
+            .then(res => {
+                this.setRows(res);
+
+            })
             .catch(e => {
                 console.log(e)
+                toast.error("Beim Laden der Mitglieder ist etwas schief gelaufen.")
             });
     }
 
@@ -92,6 +113,10 @@ export default class index extends Component {
                 Tel_NR: res[i].Tel_NR,
                 KontoName: res[i].Konto[0]?.KontoName,
                 IBAN: res[i]?.Konto[0]?.IBAN,
+                password: res[i]?.password,
+                role: res[i]?.role,
+                Beruf: res[i]?.Beruf
+
             })
         }
         return arr
@@ -112,9 +137,13 @@ export default class index extends Component {
 
     _deleteMember = () => {
         axios.post('http://localhost:5001/api/v1/Vereinsmitglied/' + this.state.selectedRow.refID)
-            .then(res => this.getAllMembers())
+            .then(res => {
+                toast.success("Mitglied wurde erfolgreich gelöscht.")
+                this.getAllMembers()
+            })
             .catch(e => {
-                alert("hat nicht geklappt")
+                if (e !== {})
+                    toast.error("Mitglied konnte nicht gelöscht werden.")
             });
     }
     render() {

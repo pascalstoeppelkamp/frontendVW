@@ -5,6 +5,9 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import AllMembers from '../../Pages/AllMembers';
 import SchemaForm from '../../Pages/SchemaForm';
+
+import Button from '@material-ui/core/Button';
+import Logout from '@material-ui/icons/ExitToApp';
 export default class index extends React.Component {
     constructor(props) {
         super(props);
@@ -28,9 +31,21 @@ export default class index extends React.Component {
         return (
             <div>
                 <Tabs selectedIndex={this.state.selectedIndex} onSelect={this.handleSelect} style={{}}>
-                    <TabList style={{ backgroundColor: "lightblue" }}>
+                    <TabList style={{ backgroundColor: "lightblue", display: "flex" }}>
                         <Tab tabFor="0" style={{}}>Alle Mitglieder</Tab>
                         <Tab tabFor="1" style={{}}>Mitglied bearbeiten/hinzufügen</Tab>
+                        <div style={{
+                            justifyContent: 'flex-end',
+                            flex: 1,
+                            display: 'flex',
+                            alignContent:"center"
+                        }}>
+                            <Button
+                            style={{alignSelf:"center",paddingLeft:16}}
+                                onClick={() => this.props.logout()}
+                                startIcon={<Logout style={{ fontSize: 30, color: 'white' }} />}
+                            />
+                        </div>
                     </TabList>
 
                     <TabPanel tabId="0">
