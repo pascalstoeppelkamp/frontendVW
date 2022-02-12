@@ -5,7 +5,7 @@ import { IconButton } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
+import Box from '@mui/material/Box';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -115,7 +115,8 @@ export default class index extends Component {
                 IBAN: res[i]?.Konto[0]?.IBAN,
                 password: res[i]?.password,
                 role: res[i]?.role,
-                Beruf: res[i]?.Beruf
+                Beruf: res[i]?.Beruf,
+                hasPremium: res[i].hasPremium
 
             })
         }
@@ -158,15 +159,32 @@ export default class index extends Component {
                             <DeleteIcon />
                         </IconButton>
                     </div>
-                    <DataGrid
-                        onSelectionModelChange={(item) => this.selected(item)}
-                        style={{ backgroundColor: "white", width: '100%' }}
-                        rows={this.state.rows}
-                        columns={columns}
-                        pageSize={15}
-                        checkboxSelection
-                        disableSelectionOnClick
-                    />
+                    <Box
+                        sx={{
+                            height: 550,
+                            width: 1,
+                            '& .super-app-theme--true': {
+                                backgroundColor: '#b9d5ff91',
+                                color: '#1a3e72',
+                            },
+                            '& .super-app-theme--false': {
+                                backgroundColor: '#ff999995',
+                                color: '#1a3e72',
+                            },
+
+                        }}
+                    >
+                        <DataGrid
+                            onSelectionModelChange={(item) => this.selected(item)}
+                            style={{ backgroundColor: "white", width: '100%' }}
+                            rows={this.state.rows}
+                            columns={columns}
+                            pageSize={15}
+                            checkboxSelection
+                            disableSelectionOnClick
+                            getRowClassName={(params) => `super-app-theme--${params.row.hasPremium}`}
+                        />
+                    </Box>
                 </div>
             </div>
         )

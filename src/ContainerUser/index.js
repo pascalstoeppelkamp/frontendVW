@@ -28,7 +28,7 @@ export default class index extends Component {
     for (let item in fulldata) {
       if (item !== "_id" && item !== "__v" && item !== "id" && item !== "createdAt") {
         arr.push(
-          <p>{item}: {fulldata[item]}</p>
+          <p><b>{item}</b>: {fulldata[item]}</p>
         )
       }
     }
@@ -45,7 +45,11 @@ export default class index extends Component {
             startIcon={<Logout style={{ fontSize: 30, color: 'white' }} />}
           />
         </div>
-        {this._setData()}
+        <div style={{ width: '800', height: '100%', alignContent: "center", display: "flex", alignItems: "center", justifyContent: "flex-start", margin: 10 }}>
+          <div style={{ width: 400, height: 600, backgroundColor: "lightgrey" }}>
+            {this._setData()}
+          </div>
+        </div>
       </div>
     )
   }
