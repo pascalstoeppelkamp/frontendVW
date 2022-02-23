@@ -16,4 +16,8 @@ export default class ServerUtils {
     localStorage.clear();
     window.location.href = '/';
   };
+
+  payPremium = async () => {
+    return axios.patch(this.url + '/api/v1/Vereinsmitglied/').then(result => { return result }).catch(e => { return e })
+  }
 }

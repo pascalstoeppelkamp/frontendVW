@@ -182,7 +182,7 @@ export default class index extends Component {
                             pageSize={15}
                             checkboxSelection
                             disableSelectionOnClick
-                            getRowClassName={(params) => `super-app-theme--${params.row.hasPremium}`}
+                            getRowClassName={(params) => `super-app-theme--${params.row.role !== 'verwalter' ? params.row.hasPremium : null}`}
                         />
                     </Box>
                 </div>

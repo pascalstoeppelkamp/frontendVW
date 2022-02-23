@@ -36,7 +36,6 @@ const styles = (theme) => ({
     marginRight: 30,
   },
   errorMsg: {
-    fontFamily: 'sans-serif',
     color: 'red',
     fontSize: 23,
     paddingTop: 20,
@@ -92,19 +91,12 @@ class LoginBox extends Component {
     let { classes } = this.props;
     return (
       <Box className={classes.container}>
-        <Button
-          className={classes.close}
-          onClick={() => this.props.closeModal()}
-        >
-          X
-        </Button>
         {isLoading ? (
           <CircularProgress disableShrink className={classes.progressBar} />
         ) : null}
         <Box style={{ marginLeft: 30 }}>
           <p
             style={{
-              fontFamily: 'IBM Plex Sans Arabic',
               fontSize: 23,
               paddingTop: 20,
             }}
