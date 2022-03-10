@@ -92,14 +92,6 @@ export default class index extends Component {
   render() {
     return (
       <div style={{ width: '100%', height: '100vh' }}>
-        <div style={{ height: 60, width: '100%', backgroundColor: "lightblue", display: "flex" }}>
-          <p style={{ color: "white", fontSize: 28, marginBottom: 0, alignSelf: "center", paddingLeft: 5 }}>Sportverein Osnabrück  </p>
-          <Button
-            style={{ alignSelf: "center", paddingLeft: 16 }}
-            onClick={() => this.props.logout()}
-            startIcon={<Logout style={{ fontSize: 30, color: 'white' }} />}
-          />
-        </div>
         <div style={{ width: '800', height: '100%', alignContent: "center", display: "flex", alignItems: "center", justifyContent: "flex-start", margin: 10 }}>
           <Paper style={{ width: 400, height: 600, padding: 15 }}>
             {this._setData()}

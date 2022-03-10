@@ -30,25 +30,13 @@ export default class index extends React.Component {
     render() {
         return (
             <div>
-                <Tabs selectedIndex={this.state.selectedIndex} onSelect={this.handleSelect} style={{}}>
-                    <TabList style={{ backgroundColor: "lightblue", display: "flex" }}>
+                <Tabs selectedIndex={this.state.selectedIndex} onSelect={this.handleSelect} style={{ height: '100%' }}>
+                    <TabList style={{ backgroundColor: "white", display: "flex" }}>
                         <Tab tabFor="0" style={{}}>Alle Mitglieder</Tab>
                         <Tab tabFor="1" style={{}}>Mitglied bearbeiten/hinzufügen</Tab>
-                        <div style={{
-                            justifyContent: 'flex-end',
-                            flex: 1,
-                            display: 'flex',
-                            alignContent:"center"
-                        }}>
-                            <Button
-                            style={{alignSelf:"center",paddingLeft:16}}
-                                onClick={() => this.props.logout()}
-                                startIcon={<Logout style={{ fontSize: 30, color: 'white' }} />}
-                            />
-                        </div>
                     </TabList>
 
-                    <TabPanel tabId="0">
+                    <TabPanel tabId="0" >
                         <AllMembers editMember={(item) => this.editMember(1, item)} />
                     </TabPanel>
                     <TabPanel tabId="1">

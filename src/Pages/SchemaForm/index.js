@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import JSONSchemaForm from "react-jsonschema-form";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { Paper } from '@material-ui/core';
+import { withTheme } from '@rjsf/core';
+import { Theme as MaterialUITheme } from '@rjsf/material-ui';
+// One could also use the `Theme4` alias
+// import { Theme4 as MaterialUITheme } from '@rjsf/material-ui';
+
+// Make modifications to the theme with your own fields and widgets
+
+const Form = withTheme(MaterialUITheme);
+
 export default class index extends Component {
     constructor(props) {
         super(props);
@@ -133,15 +143,7 @@ export default class index extends Component {
                     title: "Telefon Nummer",
                     type: "string",
                     default: this.state.memberObj.Tel_NR,
-                }
-            },
-            required: ["Vorname", "Nachname", "Email", "Wohnort", "Tel_NR", "role", "Beruf", "password"]
-        };
-
-
-        const postSchemaAccount = {
-            type: "object",
-            properties: {
+                },
                 KontoName: {
                     title: "Konto Name",
                     default: this.state.memberObj.KontoName,
@@ -153,18 +155,16 @@ export default class index extends Component {
                     type: "number",
                 },
             },
-            required: ["KontoName", "IBAN"]
+            required: ["Vorname", "Nachname", "Email", "Wohnort", "Tel_NR", "role", "Beruf", "password", "KontoName", "IBAN"]
         };
 
-        return <div style={{ padding: 10 }}>
-            <h2 style={{ padding: 10 }}>Mitglied {this.state.pageType === "editMember" ? "bearbeiten" : "hinzufügen"}</h2>
-            <h3 style={{ padding: 20 }}>Mitglied</h3>
-            <JSONSchemaForm onChange={(item) => this.changeData(item)} schema={postSchemaMember}>
-                <br />
-                <h3 style={{ padding: 10 }}>Konto</h3>
-            </JSONSchemaForm>
-            <JSONSchemaForm onChange={(item) => this.changeData(item)} schema={postSchemaAccount} onSubmit={this.onSubmit} />
 
-        </div>
+
+        return <Paper style={{ padding: 10, paddingLeft: '28%', paddingRight: '28%' }}>
+            <h2 style={{ padding: 10 }}>Mitglied {this.state.pageType === "editMember" ? "bearbeiten" : "hinzufügen"}</h2>
+            <Paper elevation={2} style={{ display: "flex", flexDirection: "column", padding: 10 }} >
+                <Form onChange={(item) => this.changeData(item)} schema={postSchemaMember} onSubmit={this.onSubmit} />
+            </Paper>
+        </Paper >
     }
 }

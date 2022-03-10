@@ -2,45 +2,41 @@ import React, { Component } from 'react';
 import { Box, TextField, Button, CircularProgress } from '@material-ui/core';
 import ServerUtils from '../../utils/ServerUtils';
 import { withStyles } from '@material-ui/core/styles';
+
+import { IconButton } from '@mui/material';
+
+import Login from '@mui/icons-material/Login';
+
 const styles = (theme) => ({
   container: {
     height: '100%',
-    width: '100%',
     display: 'flex',
     flexDirection: 'column',
   },
   loginContainer: {
-    width: '100%',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    flex: 1.5,
-    marginTop: 20,
+    padding: 20
+
   },
   username: {
-    marginLeft: 30,
-    marginRight: 30,
+    padding: 5
   },
   password: {
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 15,
+    padding: 5
   },
   loginBtn: {
-    width: '100%',
-    height: 30,
+   width:50
   },
   loginBtnBox: {
-    marginTop: 15,
-    marginLeft: 30,
-    marginRight: 30,
+    margin: 5
   },
   errorMsg: {
     color: 'red',
     fontSize: 23,
     paddingTop: 20,
-    marginLeft: 30,
-    marginRight: 30,
+
   },
   progressBar: {
     position: 'absolute',
@@ -50,7 +46,7 @@ const styles = (theme) => ({
   },
   close: {
     position: 'absolute',
-    margin: 5,
+
     alignSelf: 'flex-end',
   },
 });
@@ -91,19 +87,11 @@ class LoginBox extends Component {
     let { classes } = this.props;
     return (
       <Box className={classes.container}>
+
         {isLoading ? (
           <CircularProgress disableShrink className={classes.progressBar} />
         ) : null}
-        <Box style={{ marginLeft: 30 }}>
-          <p
-            style={{
-              fontSize: 23,
-              paddingTop: 20,
-            }}
-          >
-            Anmeldung
-          </p>
-        </Box>
+
         <Box className={classes.loginContainer}>
           <TextField
             className={classes.username}
@@ -122,15 +110,11 @@ class LoginBox extends Component {
             }
             label="password"
           />
-          <Box
-            borderColor="primary.main"
-            border={1}
-            className={classes.loginBtnBox}
-          >
-            <Button onClick={this.Login} className={classes.loginBtn}>
-              Anmelden
-            </Button>
-          </Box>
+         
+            <IconButton  onClick={this.Login} className={classes.loginBtn}>
+              <Login />
+            </IconButton>
+        
           {error ? <p className={classes.errorMsg}>{error}</p> : null}
         </Box>
       </Box>

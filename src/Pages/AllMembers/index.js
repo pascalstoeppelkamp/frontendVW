@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { DataGrid } from '@mui/x-data-grid';
 import { IconButton } from '@mui/material';
-
+import {Paper}from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
@@ -149,16 +149,16 @@ export default class index extends Component {
     }
     render() {
         return (
-            <div style={{ justifyContent: "flex-start", height: '100%', display: "flex", }}>
-                <div style={{ display: 'flex', flexDirection: "column", flex: 1, minHeight: 600, padding: 20 }}>
-                    <div style={{ alignSelf: "flex-start", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+            <Paper style={{ backgroundColor:"red",justifyContent: "flex-start", height: '100%', display: "flex",margin:70 }}>
+                <Paper style={{ display: 'flex', flexDirection: "column", flex: 1, minHeight: 600, padding: 20 }}>
+                    <Paper style={{ alignSelf: "flex-start", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                         <IconButton disabled={!this.state.selected} aria-label="edit" style={{ margin: 5 }} onClick={() => this._editMember()}>
                             <EditIcon />
                         </IconButton>
                         <IconButton onClick={() => this._deleteMember()} disabled={!this.state.selected} aria-label="delete" style={{ margin: 5 }}>
                             <DeleteIcon />
                         </IconButton>
-                    </div>
+                    </Paper>
                     <Box
                         sx={{
                             height: 550,
@@ -185,8 +185,8 @@ export default class index extends Component {
                             getRowClassName={(params) => `super-app-theme--${params.row.role !== 'verwalter' ? params.row.hasPremium : null}`}
                         />
                     </Box>
-                </div>
-            </div>
+                </Paper>
+            </Paper>
         )
     }
 }
