@@ -89,8 +89,8 @@ export default class index extends Component {
     }
 
     render() {
-
-        const postSchemaMember = {
+        let schema = {};
+        schema = this.state.pageType === "editMember" ? {
             type: "object",
             properties: {
                 Vorname: {
@@ -141,7 +141,73 @@ export default class index extends Component {
                 },
                 Tel_NR: {
                     title: "Telefon Nummer",
+                    type: "number",
+                    default: this.state.memberObj.Tel_NR,
+                },
+                KontoName: {
+                    title: "Konto Name",
+                    default: this.state.memberObj.KontoName,
                     type: "string",
+                },
+                IBAN: {
+                    title: "IBAN",
+                    default: this.state.memberObj.IBAN,
+                    type: "number",
+                },
+            },
+            required: ["Vorname", "Nachname", "Email", "Wohnort", "Tel_NR", "role", "Beruf", "KontoName", "IBAN"]
+        } : {
+            type: "object",
+            properties: {
+                Vorname: {
+                    title: "Vorname",
+                    type: "string",
+                    default: this.state.memberObj.Vorname,
+                    minLength: 5,
+                    maxLength: 140,
+                },
+                Nachname: {
+                    title: "Nachname",
+                    type: "string",
+                    default: this.state.memberObj.Nachname,
+                    minLength: 5,
+                    maxLength: 140
+                },
+                role: {
+                    "enum": [
+                        "user",
+                        "verwalter"
+                    ],
+                    title: "Rolle",
+                    default: this.state.memberObj.role
+                },
+                Beruf: {
+                    "enum": [
+                        "Schüler",
+                        "Student",
+                        "Sonstiges"
+                    ],
+                    default: this.state.memberObj.Beruf,
+                    title: "Beruf"
+                },
+                Email: {
+                    title: "E-mail",
+                    type: "string",
+                    default: this.state.memberObj.Email,
+                },
+                password: {
+                    title: "Passwort",
+                    type: "string",
+                    default: this.state.memberObj.password
+                },
+                Wohnort: {
+                    title: "Wohnort",
+                    type: "string",
+                    default: this.state.memberObj.Wohnort,
+                },
+                Tel_NR: {
+                    title: "Telefon Nummer",
+                    type: "number",
                     default: this.state.memberObj.Tel_NR,
                 },
                 KontoName: {
@@ -163,7 +229,7 @@ export default class index extends Component {
         return <Paper style={{ padding: 10, paddingLeft: '28%', paddingRight: '28%' }}>
             <h2 style={{ padding: 10 }}>Mitglied {this.state.pageType === "editMember" ? "bearbeiten" : "hinzufügen"}</h2>
             <Paper elevation={2} style={{ display: "flex", flexDirection: "column", padding: 10 }} >
-                <Form onChange={(item) => this.changeData(item)} schema={postSchemaMember} onSubmit={this.onSubmit} />
+                <Form onChange={(item) => this.changeData(item)} schema={schema} onSubmit={this.onSubmit} />
             </Paper>
         </Paper >
     }
